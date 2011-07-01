@@ -10,7 +10,6 @@ import (
 )
 
 type Page struct {
-	Title string
 	Body  []byte
 }
 
@@ -29,7 +28,7 @@ func loadPage(title string)(*Page, os.Error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Page{Title: title, Body: body}, nil
+	return &Page{Body: body}, nil
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
