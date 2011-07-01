@@ -2,11 +2,11 @@ package main
 
 import (
 	
-	"fmt"
 	"http"
 	"io/ioutil"
 	"os"
-	"regexp"
+	"fmt"
+//	"flag"
 )
 
 type Page struct {
@@ -14,42 +14,38 @@ type Page struct {
 	Body  []byte
 }
 
-var titleValidator = regexp.MustCompile("^[a-zA-Z0-9].+$")
-
-func getPage(w http.ResponseWriter, r *http.Request) (title string, err os.Error) {
-	title = r.URL.Path[lenPath:]
-	if !titleValidator.MatchString(title) {
-		http.NotFound(w, r)
-		err = os.NewError("Invalid Page")
+func indexPage(w http.ResponseWriter, r *http.Request) (title string, err os.Error) {
+	title = r.URL.Path[1:]
+	if title != "" {
+		return
 	}
+	title = "index.html"
 	return
 }
 
-func loadPage(title string) (*Page, os.Error) {
-	filename := title
-	body, err := ioutil.ReadFile(filename)
+// Load a file from the OS, return a Page struct or error
+func loadPage(title string)(*Page, os.Error) {
+	body, err := ioutil.ReadFile(title)
 	if err != nil {
 		return nil, err
 	}
 	return &Page{Title: title, Body: body}, nil
 }
 
-const lenPath = len("/")
-
-func defaultHandler(w http.ResponseWriter, r *http.Request) {
-	title, err := getPage(w, r)
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	title, err := indexPage(w, r)
 	if err != nil {
 		return
 	}
 	p, err := loadPage(title)
 	if err != nil {
-		http.Redirect(w, r, "/", http.StatusFound)
+		http.NotFound(w, r)
 		return
 	}
 	fmt.Fprintf(w, "%s", p.Body)
 }
 
 func main() {
-	http.HandleFunc("/", defaultHandler)
+	http.HandleFunc("/", rootHandler)
 	http.ListenAndServe(":8080", nil)
 }
