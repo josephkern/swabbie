@@ -6,14 +6,12 @@ import (
 	"io/ioutil"
 	"os"
 	"fmt"
-//	"flag"
 )
 
 type Page struct {
 	Body  []byte
 }
 
-// Load a file from the OS, return a Page struct or error
 func loadPage(w http.ResponseWriter, r *http.Request)(*Page, os.Error) {
 	title := r.URL.Path[1:]
 	if title == "" {
