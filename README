@@ -1,14 +1,6 @@
-<<<<<<< HEAD
 A few basic instructions:
 
 1. Install go.
 2. make
 3. ./swabbie
 4. http://127.0.0.1:8080
-
-=======
-1. install go
-2. make
-3. ./swabbie
-4. http://127.0.0.1:8080
->>>>>>> d7848a27a886779b7d338f1a8e9a0b8d365f389f
