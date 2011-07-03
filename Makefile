@@ -2,6 +2,6 @@ include $(GOROOT)/src/Make.inc
 
 TARG=swabbie
 GOFILES=\
-	swabbie.go\
+	src/swabbie.go\
 
 include $(GOROOT)/src/Make.cmd
