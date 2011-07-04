@@ -34,6 +34,8 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
+//	req := http.Request.Write(r)
+	fmt.Fprintf(w, "%s", r.Host)
 	fmt.Fprintf(w, "%s", p.Body)
 }
 
