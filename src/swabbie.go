@@ -6,7 +6,11 @@ import (
 	"io/ioutil"
 	"os"
 	"fmt"
+	"flag"
+	"strconv"
 )
+
+var port *int = flag.Int("port", 8080, "Port for web server to listen on. Default 8080.")
 
 type Page struct {
 	Body  []byte
@@ -34,6 +38,10 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	flag.Parse()
+
 	http.HandleFunc("/", rootHandler)
-	http.ListenAndServe(":8080", nil)
+	
+	Port := ":" + strconv.Itoa(*port)
+	http.ListenAndServe(Port, nil)
 }
