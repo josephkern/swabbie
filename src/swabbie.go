@@ -35,7 +35,9 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 //	req := http.Request.Write(r)
-	fmt.Fprintf(w, "%s", r.Host)
+	// host - userid [day/month/year :hour:minute:second zone] request response objectsize referer user-agent
+	// need to add in the response fields from the ResponseWriter interface
+	fmt.Printf("%s - userid [time] %s %s %s %s\n", r.Host, r.Method, r.RawURL, r.Referer, r.UserAgent)
 	fmt.Fprintf(w, "%s", p.Body)
 }
 
